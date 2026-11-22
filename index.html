@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Resource Request Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Classroom Resource Request Portal</h1>
+    <p>Request projectors, markers, laptops and other classroom resources easily</p>
+  </header>
+
+  <main>
+
+    <!-- Message box (success / error messages show here) -->
+    <div id="messageBox" class="message hidden"></div>
+
+    <!-- ========== DASHBOARD / SUMMARY ========== -->
+    <section>
+      <h2>Dashboard</h2>
+      <div class="cards">
+        <div class="card total">
+          <h3 id="totalCount">0</h3>
+          <p>Total Requests</p>
+        </div>
+        <div class="card pending">
+          <h3 id="pendingCount">0</h3>
+          <p>Pending</p>
+        </div>
+        <div class="card approved">
+          <h3 id="approvedCount">0</h3>
+          <p>Approved</p>
+        </div>
+        <div class="card rejected">
+          <h3 id="rejectedCount">0</h3>
+          <p>Rejected</p>
+        </div>
+        <div class="card delivered">
+          <h3 id="deliveredCount">0</h3>
+          <p>Delivered</p>
+        </div>
+      </div>
+
+      <!-- Progress bar: shows how many requests are completed (Delivered) -->
+      <p class="progress-text">Completed Requests: <span id="progressPercent">0</span>%</p>
+      <div class="progress-outer">
+        <div id="progressBar" class="progress-inner"></div>
+      </div>
+    </section>
+
+    <!-- ========== REQUEST FORM ========== -->
+    <section>
+      <h2 id="formTitle">New Resource Request</h2>
+
+      <form id="requestForm">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="studentName">Student Name</label>
+            <input type="text" id="studentName" placeholder="Enter your full name">
+          </div>
+
+          <div class="form-group">
+            <label for="rollNo">Registration Number</label>
+            <input type="text" id="rollNo" placeholder="e.g. 12512345">
+          </div>
+
+          <div class="form-group">
+            <label for="roomNo">Classroom / Room No.</label>
+            <input type="text" id="roomNo" placeholder="e.g. 34-201">
+          </div>
+
+          <div class="form-group">
+            <label for="resource">Resource Needed</label>
+            <select id="resource">
+              <option value="">-- Select Resource --</option>
+              <option value="Projector">Projector</option>
+              <option value="Laptop">Laptop</option>
+              <option value="Speaker">Speaker</option>
+              <option value="Extension Board">Extension Board</option>
+              <option value="Marker">Marker</option>
+              <option value="Duster">Duster</option>
+              <option value="Extra Chairs">Extra Chairs</option>
+              <option value="Extra Tables">Extra Tables</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="1" max="20" value="1">
+          </div>
+
+          <div class="form-group">
+            <label for="reqDate">Date Required</label>
+            <input type="date" id="reqDate">
+          </div>
+
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="reason">Reason for Request</label>
+          <textarea id="reason" rows="3" placeholder="Why do you need this resource?"></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Submit Request</button>
+        <button type="button" id="cancelBtn" class="hidden" onclick="resetForm()">Cancel Edit</button>
+      </form>
+    </section>
+
+    <!-- ========== REQUEST LIST ========== -->
+    <section>
+      <h2>All Requests</h2>
+
+      <!-- Search and filters -->
+      <div class="filters">
+        <input type="text" id="searchBox" placeholder="Search by name, reg. no or resource..." oninput="showRequests()">
+
+        <select id="statusFilter" onchange="showRequests()">
+          <option value="All">All Status</option>
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+
+        <select id="categoryFilter" onchange="showRequests()">
+          <option value="All">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Stationery">Stationery</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Table is wrapped in a div so it can scroll on small screens -->
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Reg. No</th>
+              <th>Room</th>
+              <th>Resource</th>
+              <th>Category</th>
+              <th>Qty</th>
+              <th>Date</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="requestTableBody">
+            <!-- Rows are added by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <p id="noData" class="no-data hidden">No requests found.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Classroom Resource Request Portal | First Year B.Tech Project</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
